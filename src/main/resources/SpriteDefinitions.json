@@ -370,5 +370,9 @@
   {
     "spriteId": -19761,
     "fileName": "/SkillsNecklaceMap/CookingGuildOutlined.png"
+  },
+  {
+    "spriteId": -19800,
+    "fileName": "/MagicCarpetMap/DesertMap.png"
   }
 ]

@@ -1,0 +1,154 @@
+[
+  {
+    "name": "Shantay Pass",
+    "x": 254,
+    "y": 61,
+    "worldPointX": 3308,
+    "worldPointY": 3110,
+    "hotkey": {
+      "x": 274,
+      "y": 63
+    },
+    "travelOptions": [
+      {
+        "option": "Uzer",
+        "destination": "Uzer"
+      },
+      {
+        "option": "Bedabin camp",
+        "destination": "Bedabin Camp"
+      },
+      {
+        "option": "Pollnivneach",
+        "destination": "North Pollnivneach"
+      }
+    ]
+  },
+  {
+    "name": "Uzer",
+    "x": 356,
+    "y": 59,
+    "worldPointX": 3469,
+    "worldPointY": 3113,
+    "hotkey": {
+      "x": 376,
+      "y": 61
+    },
+    "travelOptions": [
+      {
+        "option": "Shantay pass",
+        "destination": "Shantay Pass"
+      }
+    ]
+  },
+  {
+    "name": "Bedabin Camp",
+    "x": 158,
+    "y": 105,
+    "worldPointX": 3181,
+    "worldPointY": 3043,
+    "hotkey": {
+      "x": 178,
+      "y": 107
+    },
+    "travelOptions": [
+      {
+        "option": "Shantay pass",
+        "destination": "Shantay Pass"
+      }
+    ]
+  },
+  {
+    "name": "North Pollnivneach",
+    "x": 280,
+    "y": 134,
+    "worldPointX": 3349,
+    "worldPointY": 3003,
+    "hotkey": {
+      "x": 300,
+      "y": 136
+    },
+    "travelOptions": [
+      {
+        "option": "Shantay pass",
+        "destination": "Shantay Pass"
+      }
+    ]
+  },
+  {
+    "name": "South Pollnivneach",
+    "x": 271,
+    "y": 174,
+    "worldPointX": 3351,
+    "worldPointY": 2941,
+    "hotkey": {
+      "x": 291,
+      "y": 176
+    },
+    "travelOptions": [
+      {
+        "option": "Nardah",
+        "destination": "Nardah"
+      },
+      {
+        "option": "Sophanem",
+        "destination": "Sophanem"
+      },
+      {
+        "option": "Menaphos",
+        "destination": "Menaphos"
+      }
+    ]
+  },
+  {
+    "name": "Nardah",
+    "x": 315,
+    "y": 190,
+    "worldPointX": 3401,
+    "worldPointY": 2916,
+    "hotkey": {
+      "x": 335,
+      "y": 192
+    },
+    "travelOptions": [
+      {
+        "option": "Pollnivneach",
+        "destination": "South Pollnivneach"
+      }
+    ]
+  },
+  {
+    "name": "Sophanem",
+    "x": 235,
+    "y": 256,
+    "worldPointX": 3285,
+    "worldPointY": 2770,
+    "hotkey": {
+      "x": 255,
+      "y": 258
+    },
+    "travelOptions": [
+      {
+        "option": "Pollnivneach",
+        "destination": "South Pollnivneach"
+      }
+    ]
+  },
+  {
+    "name": "Menaphos",
+    "x": 193,
+    "y": 256,
+    "worldPointX": 3245,
+    "worldPointY": 2813,
+    "hotkey": {
+      "x": 213,
+      "y": 258
+    },
+    "travelOptions": [
+      {
+        "option": "Pollnivneach",
+        "destination": "South Pollnivneach"
+      }
+    ]
+  }
+]
