@@ -9,7 +9,6 @@ import com.mjhylkema.TeleportMaps.ui.UIHotkey;
 import com.mjhylkema.TeleportMaps.ui.UITeleport;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
-import net.runelite.api.widgets.InterfaceID;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetType;
 import net.runelite.client.callback.ClientThread;
@@ -31,9 +30,9 @@ public class SkillsNecklaceMap extends BaseMap implements IAdventureMap
 	/* Sprite IDs, dimensions and positions */
 	private static final int MAP_SPRITE_ID = -19700;
 	private static final int MAP_SPRITE_WIDTH = 507;
-	private static final int MAP_SPRITE_HEIGHT = 319;
+	private static final int MAP_SPRITE_HEIGHT = 317;
 	private static final int SCRIPT_TRIGGER_KEY = 1437;
-	private static final String LABEL_NAME_PATTERN = "<col=735a28>(.+)</col>: (<col=5f5f5f>)?(.+)";
+	private static final String LABEL_NAME_PATTERN = AdventureLogComposite.ENTRY_LABEL_PATTERN;
 	private static final String TRAVEL_ACTION = "Travel";
 	private static final String EXAMINE_ACTION = "Examine";
 	private static final int ADVENTURE_LOG_CONTAINER_BACKGROUND = 0;
@@ -90,10 +89,10 @@ public class SkillsNecklaceMap extends BaseMap implements IAdventureMap
 	}
 
 	@Override
-	public void buildInterface(Widget adventureLogContainer)
+	public void buildInterface(Widget adventureLogContainer, Widget entryList)
 	{
 		this.hideAdventureLogContainerChildren(adventureLogContainer);
-		this.buildAvailableTeleportList();
+		this.buildAvailableTeleportList(entryList);
 
 		this.createMapWidget(adventureLogContainer);
 		this.createTeleportWidgets(adventureLogContainer);
@@ -101,6 +100,12 @@ public class SkillsNecklaceMap extends BaseMap implements IAdventureMap
 
 	private void hideAdventureLogContainerChildren(Widget adventureLogContainer)
 	{
+		Widget existingBackground = adventureLogContainer.getChild(ADVENTURE_LOG_CONTAINER_BACKGROUND);
+		if (existingBackground != null)
+		{
+			existingBackground.setHidden(true);
+		}
+
 		Widget title = adventureLogContainer.getChild(ADVENTURE_LOG_CONTAINER_TITLE);
 		if (title != null)
 		{
@@ -112,16 +117,13 @@ public class SkillsNecklaceMap extends BaseMap implements IAdventureMap
 	 * NOTE: Not even sure if this is needed. Needs confirmation if Zeah needs to be unlocked first.
 	 * Farming and Woodcutting might be blocked like Windertodt on a games necklace.
 	 */
-	private void buildAvailableTeleportList()
+	private void buildAvailableTeleportList(Widget teleportList)
 	{
 		this.availableLocations = new HashMap<>();
 
 		// Compile the pattern that will match the teleport label
 		// and place the hotkey and teleport name into groups
 		Pattern labelPattern = Pattern.compile(LABEL_NAME_PATTERN);
-
-		// Get the parent widgets containing the teleport locations list
-		Widget teleportList = this.client.getWidget(InterfaceID.ADVENTURE_LOG, 3);
 
 		// Fetch all teleport label widgets
 		Widget[] labelWidgets = teleportList.getDynamicChildren();
@@ -169,7 +171,7 @@ public class SkillsNecklaceMap extends BaseMap implements IAdventureMap
 			MAP_SPRITE_WIDTH,
 			MAP_SPRITE_HEIGHT,
 			4,
-			12,
+			13,
 			MAP_SPRITE_ID);
 	}
 
@@ -221,6 +223,6 @@ public class SkillsNecklaceMap extends BaseMap implements IAdventureMap
 
 	private void triggerTeleport(AdventureLogEntry<SkillsNecklaceDefinition> adventureLogEntry)
 	{
-		this.clientThread.invokeLater(() -> this.client.runScript(SCRIPT_TRIGGER_KEY, this.client.getWidget(0xBB0003).getId(), adventureLogEntry.getWidget().getIndex()));
+		this.clientThread.invokeLater(() -> this.client.runScript(SCRIPT_TRIGGER_KEY, adventureLogEntry.getWidget().getId(), adventureLogEntry.getWidget().getIndex()));
 	}
 }

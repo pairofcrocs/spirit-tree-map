@@ -42,7 +42,7 @@ public class SpiritTreeMap extends BaseMap implements IAdventureMap
 	private static final int DISABLED_TREE_SPRITE_HEIGHT = 27;
 
 	private static final int SCRIPT_TRIGGER_KEY = 1437;
-	private static final String TREE_LABEL_NAME_PATTERN = "<col=735a28>(.+)</col>: (<col=5f5f5f>)?(.+)";
+	private static final String TREE_LABEL_NAME_PATTERN = AdventureLogComposite.ENTRY_LABEL_PATTERN;
 	private static final String TRAVEL_ACTION = "Travel";
 	private static final String EXAMINE_ACTION = "Examine";
 	private static final int ADVENTURE_LOG_CONTAINER_BACKGROUND = 0;
@@ -84,10 +84,10 @@ public class SpiritTreeMap extends BaseMap implements IAdventureMap
 		}
 	}
 
-	public void buildInterface(Widget adventureLogContainer)
+	public void buildInterface(Widget adventureLogContainer, Widget entryList)
 	{
 		this.hideAdventureLogContainerChildren(adventureLogContainer);
-		this.buildAvailableTreeList();
+		this.buildAvailableTreeList(entryList);
 		this.moveExitWidget();
 		this.createMapWidget(adventureLogContainer);
 		this.createTeleportWidgets(adventureLogContainer);
@@ -139,16 +139,13 @@ public class SpiritTreeMap extends BaseMap implements IAdventureMap
 	/**
 	 * Constructs the list of trees available for the player to use
 	 */
-	private void buildAvailableTreeList()
+	private void buildAvailableTreeList(Widget treeList)
 	{
 		this.availableTrees = new HashMap<>();
 
 		// Compile the pattern that will match the teleport label
 		// and place the hotkey and teleport name into groups
 		Pattern labelPattern = Pattern.compile(TREE_LABEL_NAME_PATTERN);
-
-		// Get the parent widgets containing the tree list
-		Widget treeList = this.plugin.getClient().getWidget(InterfaceID.ADVENTURE_LOG, 3);
 
 		// Fetch all tree label widgets
 		Widget[] labelWidgets = treeList.getDynamicChildren();
@@ -275,7 +272,7 @@ public class SpiritTreeMap extends BaseMap implements IAdventureMap
 
 	private void triggerTeleport(Tree tree)
 	{
-		this.clientThread.invokeLater(() -> this.client.runScript(SCRIPT_TRIGGER_KEY, this.client.getWidget(0xBB0003).getId(), tree.getWidget().getIndex()));
+		this.clientThread.invokeLater(() -> this.client.runScript(SCRIPT_TRIGGER_KEY, tree.getWidget().getId(), tree.getWidget().getIndex()));
 	}
 
 	private void triggerLockedMessage(TreeDefinition treeDefinition)
