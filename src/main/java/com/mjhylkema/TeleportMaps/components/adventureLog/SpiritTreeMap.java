@@ -37,6 +37,7 @@ public class SpiritTreeMap extends BaseMap implements IAdventureMap
 	private static final int MAP_SPRITE_WIDTH = 512;
 	private static final int MAP_SPRITE_HEIGHT = 334;
 	private static final int DISABLED_TREE_SPRITE_ID = -19102;
+	private static final int DISABLED_HOUSE_SPRITE_ID = -19005;
 	private static final int DISABLED_TREE_SPRITE_WIDTH = 19;
 	private static final int DISABLED_TREE_SPRITE_HEIGHT = 27;
 
@@ -233,10 +234,13 @@ public class SpiritTreeMap extends BaseMap implements IAdventureMap
 			UITeleport treeTeleport = new UITeleport(widgetContainer, treeWidget);
 
 			treeTeleport.setPosition(treeDefinition.getX(), treeDefinition.getY());
+
+			int disabledHouseSprite = treeDefinition.getName().equals("Your house") ? DISABLED_HOUSE_SPRITE_ID : DISABLED_TREE_SPRITE_ID;
+
 			if (latestTree != null && latestTree == treeDefinition)
-				treeTeleport.setTeleportSprites(treeDefinition.getSpriteSelected(), treeDefinition.getSpriteHover(), DISABLED_TREE_SPRITE_ID);
+				treeTeleport.setTeleportSprites(treeDefinition.getSpriteSelected(), treeDefinition.getSpriteHover(), disabledHouseSprite);
 			else
-				treeTeleport.setTeleportSprites(treeDefinition.getSpriteEnabled(), treeDefinition.getSpriteHover(), DISABLED_TREE_SPRITE_ID);
+				treeTeleport.setTeleportSprites(treeDefinition.getSpriteEnabled(), treeDefinition.getSpriteHover(), disabledHouseSprite);
 
 			if (isTreeUnlocked(treeDefinition.getName()))
 			{
@@ -251,8 +255,11 @@ public class SpiritTreeMap extends BaseMap implements IAdventureMap
 			}
 			else
 			{
+				int disabledWidth = treeDefinition.getName().equals("Your house") ? treeDefinition.getWidth() : DISABLED_TREE_SPRITE_WIDTH;
+				int disabledHeight = treeDefinition.getName().equals("Your house") ? treeDefinition.getHeight() : DISABLED_TREE_SPRITE_HEIGHT;
+
 				treeTeleport.setLocked(true);
-				treeTeleport.setSize(DISABLED_TREE_SPRITE_WIDTH, DISABLED_TREE_SPRITE_HEIGHT);
+				treeTeleport.setSize(disabledWidth, disabledHeight);
 				treeTeleport.setName(treeDefinition.getName());
 				treeTeleport.addAction(EXAMINE_ACTION, () -> this.triggerLockedMessage(treeDefinition));
 			}

@@ -20,6 +20,10 @@
     "fileName": "/SpiritTreeMap/HouseSelected.png"
   },
   {
+    "spriteId": -19005,
+    "fileName": "/SpiritTreeMap/HouseDisabled.png"
+  },
+  {
     "spriteId": -19100,
     "fileName": "/SpiritTreeMap/Default.png"
   },
