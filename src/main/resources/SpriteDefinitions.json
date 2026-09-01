@@ -212,5 +212,15 @@
     "hoverSpriteId": -19802,
     "selectedSpriteId": -19803,
     "disabledSpriteId": -19804
+  },
+  {
+    "spriteId": -19900,
+    "fileName": "/KharedstMemoirsMap/KharedstsMap.png"
+  },
+  {
+    "spriteId": -19901,
+    "fileName": "/KharedstMemoirsMap/Rose.png",
+    "hoverSpriteId": -19902,
+    "disabledSpriteId": -19903
   }
 ]

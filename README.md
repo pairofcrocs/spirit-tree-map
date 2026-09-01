@@ -26,3 +26,7 @@ Provides interactive maps to replace traditional text based teleport interfaces.
 ###### Thanks [pairofcros](https://github.com/pairofcrocs)!
 ![image](https://github.com/user-attachments/assets/bbe5ca16-fb6d-4691-835f-9e55ffd46944)
 
+### Kharedst's Memoirs / Book of the Dead
+###### Thanks [pairofcros](https://github.com/pairofcrocs)!
+Reminisce with the memoirs to pick a Great Kourend city from the map.
+
