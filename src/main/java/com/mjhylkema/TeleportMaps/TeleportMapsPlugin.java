@@ -78,7 +78,7 @@ public class TeleportMapsPlugin extends Plugin
 	{
 		SpriteDefinition[] spriteDefinitions = this.loadDefinitionResource(SpriteDefinition[].class, DEF_FILE_SPRITES);
 		this.spriteManager.addSpriteOverrides(spriteDefinitions);
-		this.magicCarpetMap.registerSprites();
+		SpriteVariants.register(this.client, spriteDefinitions);
 
 		this.mapComponents = Arrays.asList(mushtreeMap, adventureLogComposite, spiritTreeMap, xericsMap, minecartMap, obeliskMap, skillsNecklaceMap, magicCarpetMap);
 
