@@ -19,5 +19,10 @@ Provides interactive maps to replace traditional text based teleport interfaces.
 ![image](https://github.com/MJHylkema/spirit-tree-map/assets/20365453/cc883ce8-f633-4fad-ba0d-1301449d024a)
 
 ### Skills Necklace
+###### Thanks [Blubmin](https://github.com/Blubmin)!
 ![image](https://github.com/user-attachments/assets/03ff8f1b-95c7-428c-96ec-fe42ea827657)
+
+### Magic Carpets
+###### Thanks [pairofcros](https://github.com/pairofcrocs)!
+![image](https://github.com/user-attachments/assets/bbe5ca16-fb6d-4691-835f-9e55ffd46944)
 
