@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Hosidius",
+    "memory": "Lunch by the Lancalliums",
+    "x": 318,
+    "y": 192,
+    "hotkey": {
+      "x": 346,
+      "y": 206
+    }
+  },
+  {
+    "name": "Port Piscarilius",
+    "memory": "The Fisher's Flute",
+    "x": 360,
+    "y": 130,
+    "hotkey": {
+      "x": 388,
+      "y": 144
+    }
+  },
+  {
+    "name": "Shayzien",
+    "memory": "History and Hearsay",
+    "x": 212,
+    "y": 208,
+    "hotkey": {
+      "x": 240,
+      "y": 222
+    }
+  },
+  {
+    "name": "Lovakengj",
+    "memory": "Jewellery of Jubilation",
+    "x": 240,
+    "y": 120,
+    "hotkey": {
+      "x": 268,
+      "y": 134
+    }
+  },
+  {
+    "name": "Arceuus",
+    "memory": "A Dark Disposition",
+    "x": 307,
+    "y": 106,
+    "hotkey": {
+      "x": 335,
+      "y": 120
+    }
+  }
+]
