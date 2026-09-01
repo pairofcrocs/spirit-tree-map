@@ -24,10 +24,10 @@ public abstract class UIComponent
 	private List<MenuAction> actions;
 
 	@Setter
-	private UIComponentEventListener hoverListener;
+	private List<UIComponentEventListener> hoverListeners;
 
 	@Setter
-	private UIComponentEventListener leaveListener;
+	private List<UIComponentEventListener> leaveListeners;
 
 
 	/**
@@ -38,6 +38,8 @@ public abstract class UIComponent
 	{
 		this.widget = widget;
 
+
+
 		// Assign the event listeners to the widget
 		this.widget.setOnOpListener((JavaScriptCallback) this::onActionSelected);
 		this.widget.setOnMouseOverListener((JavaScriptCallback) this::onMouseHover);
@@ -45,6 +47,8 @@ public abstract class UIComponent
 		this.widget.setHasListener(true);
 
 		this.actions = new ArrayList<>();
+		this.hoverListeners = new ArrayList<>();
+		this.leaveListeners = new ArrayList<>();
 	}
 
 	/**
@@ -83,8 +87,8 @@ public abstract class UIComponent
 	protected void onMouseHover(ScriptEvent e)
 	{
 		// If a hover event is specified, trigger it
-		if (this.hoverListener != null)
-			this.hoverListener.onComponentEvent(this);
+		for (UIComponentEventListener listener : this.hoverListeners)
+			listener.onComponentEvent(this);
 	}
 
 	/**
@@ -94,8 +98,8 @@ public abstract class UIComponent
 	protected void onMouseLeave(ScriptEvent e)
 	{
 		// If a leave event is specified, trigger it
-		if (this.leaveListener != null)
-			this.leaveListener.onComponentEvent(this);
+		for (UIComponentEventListener listener : this.leaveListeners)
+			listener.onComponentEvent(this);
 	}
 
 	/**
@@ -103,9 +107,9 @@ public abstract class UIComponent
 	 * hovering over the widget
 	 * @param listener the listener
 	 */
-	public void setOnHoverListener(UIComponentEventListener listener)
+	public void addOnHoverListener(UIComponentEventListener listener)
 	{
-		this.hoverListener = listener;
+		this.hoverListeners.add(listener);
 	}
 
 	/**
@@ -113,9 +117,9 @@ public abstract class UIComponent
 	 * exiting from over the widget
 	 * @param listener the listener
 	 */
-	public void setOnLeaveListener(UIComponentEventListener listener)
+	public void addOnLeaveListener(UIComponentEventListener listener)
 	{
-		this.leaveListener = listener;
+		this.leaveListeners.add(listener);
 	}
 
 	/**

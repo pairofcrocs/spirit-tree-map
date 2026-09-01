@@ -1,13 +1,13 @@
 [
   {
     "name": "Shantay Pass",
-    "x": 254,
-    "y": 61,
+    "x": 216,
+    "y": 43,
     "worldPointX": 3308,
     "worldPointY": 3110,
     "hotkey": {
-      "x": 274,
-      "y": 63
+      "x": 241,
+      "y": 50
     },
     "travelOptions": [
       {
@@ -26,13 +26,13 @@
   },
   {
     "name": "Uzer",
-    "x": 356,
-    "y": 59,
+    "x": 393,
+    "y": 66,
     "worldPointX": 3469,
     "worldPointY": 3113,
     "hotkey": {
-      "x": 376,
-      "y": 61
+      "x": 418,
+      "y": 73
     },
     "travelOptions": [
       {
@@ -43,13 +43,13 @@
   },
   {
     "name": "Bedabin Camp",
-    "x": 158,
-    "y": 105,
+    "x": 96,
+    "y": 89,
     "worldPointX": 3181,
     "worldPointY": 3043,
     "hotkey": {
-      "x": 178,
-      "y": 107
+      "x": 121,
+      "y": 96
     },
     "travelOptions": [
       {
@@ -60,13 +60,13 @@
   },
   {
     "name": "North Pollnivneach",
-    "x": 280,
-    "y": 134,
+    "x": 250,
+    "y": 90,
     "worldPointX": 3349,
     "worldPointY": 3003,
     "hotkey": {
-      "x": 300,
-      "y": 136
+      "x": 275,
+      "y": 97
     },
     "travelOptions": [
       {
@@ -77,13 +77,13 @@
   },
   {
     "name": "South Pollnivneach",
-    "x": 271,
-    "y": 174,
+    "x": 262,
+    "y": 139,
     "worldPointX": 3351,
     "worldPointY": 2941,
     "hotkey": {
-      "x": 291,
-      "y": 176
+      "x": 287,
+      "y": 146
     },
     "travelOptions": [
       {
@@ -102,13 +102,13 @@
   },
   {
     "name": "Nardah",
-    "x": 315,
-    "y": 190,
+    "x": 324,
+    "y": 141,
     "worldPointX": 3401,
     "worldPointY": 2916,
     "hotkey": {
-      "x": 335,
-      "y": 192
+      "x": 349,
+      "y": 148
     },
     "travelOptions": [
       {
@@ -119,13 +119,13 @@
   },
   {
     "name": "Sophanem",
-    "x": 235,
-    "y": 256,
+    "x": 201,
+    "y": 200,
     "worldPointX": 3285,
     "worldPointY": 2770,
     "hotkey": {
-      "x": 255,
-      "y": 258
+      "x": 226,
+      "y": 207
     },
     "travelOptions": [
       {
@@ -136,13 +136,13 @@
   },
   {
     "name": "Menaphos",
-    "x": 193,
-    "y": 256,
+    "x": 153,
+    "y": 200,
     "worldPointX": 3245,
     "worldPointY": 2813,
     "hotkey": {
-      "x": 213,
-      "y": 258
+      "x": 179,
+      "y": 207
     },
     "travelOptions": [
       {

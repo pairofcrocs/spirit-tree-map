@@ -19,8 +19,8 @@ public class UITeleport extends UIComponent
 	public UITeleport(Widget groupWidget, Widget teleport)
 	{
 		super(groupWidget);
-		this.setOnHoverListener(this::onHover);
-		this.setOnLeaveListener(this::onLeave);
+		this.addOnHoverListener(this::onHover);
+		this.addOnLeaveListener(this::onLeave);
 
 		this.teleportButton = new UIButton(teleport);
 	}

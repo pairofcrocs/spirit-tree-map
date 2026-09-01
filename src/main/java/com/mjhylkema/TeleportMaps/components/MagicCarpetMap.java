@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
@@ -38,8 +39,8 @@ public class MagicCarpetMap extends BaseMap
 
 	/* Sprite IDs, dimensions and positions */
 	private static final int MAP_SPRITE_ID = -19800;
-	private static final int MAP_SPRITE_WIDTH = 509;
-	private static final int MAP_SPRITE_HEIGHT = 317;
+	private static final int MAP_SPRITE_WIDTH = 512;
+	private static final int MAP_SPRITE_HEIGHT = 334;
 	private static final int CARPET_SPRITE_ID = -19801;
 	private static final int CARPET_HIGHLIGHTED_SPRITE_ID = -19802;
 	private static final int CARPET_SELECTED_SPRITE_ID = -19803;
@@ -47,17 +48,17 @@ public class MagicCarpetMap extends BaseMap
 	private static final int CLOSE_BUTTON_SPRITE_ID = 537;
 	private static final int CLOSE_BUTTON_WIDTH = 26;
 	private static final int CLOSE_BUTTON_HEIGHT = 23;
-	private static final int CLOSE_BUTTON_X = 447;
+	private static final int CLOSE_BUTTON_X = 427;
 	private static final int CLOSE_BUTTON_Y = 24;
 
 	/* The carpet's hover, selected and disabled sprites are generated
 	   from the single base image at startup */
 	private static final String IMG_CARPET = "/MagicCarpetMap/Carpet.png";
-	private static final Color HOVER_STROKE_INNER = new Color(238, 235, 18);
-	private static final Color HOVER_STROKE_OUTER = new Color(149, 150, 44);
-	private static final Color SELECTED_STROKE_INNER = new Color(106, 238, 18);
-	private static final Color SELECTED_STROKE_OUTER = new Color(86, 150, 44);
-	private static final float DISABLED_BRIGHTNESS = 0.55f;
+	private static final Color HOVER_STROKE_INNER = new Color(188, 144, 0);
+	private static final Color HOVER_STROKE_OUTER = new Color(255, 191, 0);
+	private static final Color SELECTED_STROKE_INNER = new Color(86, 150, 44);
+	private static final Color SELECTED_STROKE_OUTER = new Color(106, 238, 18);
+	private static final float DISABLED_BRIGHTNESS = 0.70f;
 
 	private static final int DIALOG_OPTION_GROUP_ID = 219;
 	private static final int DIALOG_OPTION_CONTAINER_CHILD = 1;
@@ -118,7 +119,7 @@ public class MagicCarpetMap extends BaseMap
 		BufferedImage base = ImageUtil.loadImageResource(TeleportMapsPlugin.class, IMG_CARPET);
 
 		this.registerSprite(CARPET_SPRITE_ID, base);
-		this.registerSprite(CARPET_HIGHLIGHTED_SPRITE_ID, outline(base, HOVER_STROKE_INNER, HOVER_STROKE_OUTER));
+		this.registerSprite(CARPET_HIGHLIGHTED_SPRITE_ID, outline(vibrant(base), HOVER_STROKE_INNER, HOVER_STROKE_OUTER));
 		this.registerSprite(CARPET_SELECTED_SPRITE_ID, outline(base, SELECTED_STROKE_INNER, SELECTED_STROKE_OUTER));
 		this.registerSprite(CARPET_DISABLED_SPRITE_ID, grayscale(base));
 	}
@@ -134,7 +135,7 @@ public class MagicCarpetMap extends BaseMap
 	 */
 	private static BufferedImage outline(BufferedImage image, Color inner, Color outer)
 	{
-		return ImageUtil.outlineImage(ImageUtil.outlineImage(image, inner), outer);
+		return ImageUtil.outlineImage(ImageUtil.outlineImage(image, inner,true), outer, true);
 	}
 
 	private static BufferedImage grayscale(BufferedImage image)
@@ -153,6 +154,42 @@ public class MagicCarpetMap extends BaseMap
 				out.setRGB(x, y, (a << 24) | (grey << 16) | (grey << 8) | grey);
 			}
 		}
+		return out;
+	}
+
+	private static BufferedImage vibrant(BufferedImage image)
+	{
+		BufferedImage out = new BufferedImage(
+				image.getWidth(),
+				image.getHeight(),
+				BufferedImage.TYPE_INT_ARGB
+		);
+
+		for (int y = 0; y < image.getHeight(); y++)
+		{
+			for (int x = 0; x < image.getWidth(); x++)
+			{
+				int argb = image.getRGB(x, y);
+
+				int a = (argb >>> 24);
+				int r = (argb >> 16) & 0xFF;
+				int g = (argb >> 8) & 0xFF;
+				int b = argb & 0xFF;
+
+				float[] hsb = java.awt.Color.RGBtoHSB(r, g, b, null);
+
+				// Increase saturation
+				hsb[1] = Math.min(1.0f, hsb[1] * 1.5f);
+
+				// Optionally increase brightness
+				hsb[2] = Math.min(1.0f, hsb[2] * 1.1f);
+
+				int rgb = java.awt.Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+
+				out.setRGB(x, y, (a << 24) | (rgb & 0x00FFFFFF));
+			}
+		}
+
 		return out;
 	}
 
@@ -318,8 +355,14 @@ public class MagicCarpetMap extends BaseMap
 		int mapY = Math.max(0, (screen.getHeight() - MAP_SPRITE_HEIGHT) / 2);
 
 		this.screenWidgets.clear();
-		this.trackScreenWidget(
-			this.createSpriteWidget(screen, MAP_SPRITE_WIDTH, MAP_SPRITE_HEIGHT, mapX, mapY, MAP_SPRITE_ID));
+
+		Widget map = this.createSpriteWidget(screen, MAP_SPRITE_WIDTH, MAP_SPRITE_HEIGHT, mapX, mapY, MAP_SPRITE_ID);
+		this.trackScreenWidget(map);
+
+		// Set hasListener / noClickThrough to disallow click-through
+		map.setHasListener(true);
+		map.setNoClickThrough(true);
+
 		this.createCarpetWidgets(screen, currentStation, options, mapX, mapY);
 		this.createCloseButton(screen, options, mapX, mapY);
 	}
@@ -382,18 +425,9 @@ public class MagicCarpetMap extends BaseMap
 		if (this.screenWidgets.isEmpty())
 			return;
 
-		// Snapshot the list; a new dialog may rebuild before the hide runs
-		final List<Widget> widgetsToHide = new ArrayList<>(this.screenWidgets);
 		this.screenWidgets.clear();
+		Objects.requireNonNull(getScreenContainer()).deleteAllChildren();
 		this.clearTeleports();
-
-		this.clientThread.invokeLater(() ->
-		{
-			for (Widget widget : widgetsToHide)
-			{
-				widget.setHidden(true);
-			}
-		});
 	}
 
 	/**
@@ -444,6 +478,13 @@ public class MagicCarpetMap extends BaseMap
 			{
 				carpetTeleport.setTeleportSprites(CARPET_SPRITE_ID, CARPET_HIGHLIGHTED_SPRITE_ID, CARPET_DISABLED_SPRITE_ID);
 				carpetTeleport.addAction(TRAVEL_ACTION, () -> this.triggerTravel(destinationOption));
+
+				carpetTeleport.addOnHoverListener((listener) -> {
+					destinationOption.widget.setTextColor(Color.WHITE.getRGB());
+				});
+				carpetTeleport.addOnLeaveListener((listener) -> {
+					destinationOption.widget.setTextColor(Color.BLACK.getRGB());
+				});
 
 				// The dialog options natively respond to their number key;
 				// child index lines up with the displayed option number

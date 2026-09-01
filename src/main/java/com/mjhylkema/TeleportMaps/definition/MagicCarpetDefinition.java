@@ -6,9 +6,9 @@ import lombok.Getter;
 public class MagicCarpetDefinition
 {
 	@Getter
-	static private final int width = 15;
+	static private final int width = 24;
 	@Getter
-	static private final int height = 24;
+	static private final int height = 33;
 
 	private String name;
 	private int x;
