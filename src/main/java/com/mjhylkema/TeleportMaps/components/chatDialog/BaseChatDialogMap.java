@@ -8,7 +8,9 @@ import com.mjhylkema.TeleportMaps.ui.MenuAction;
 import com.mjhylkema.TeleportMaps.ui.UIButton;
 import com.mjhylkema.TeleportMaps.ui.UIHotkey;
 import com.mjhylkema.TeleportMaps.ui.UITeleport;
+import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -45,9 +47,9 @@ public abstract class BaseChatDialogMap extends BaseMap
 	   to the number keys matching their position in the dialog */
 	private static final int OPTION_KEY_CHAR_BASE = '0';
 
-	private static final int CLOSE_BUTTON_SPRITE_ID = 537;
-	private static final int CLOSE_BUTTON_WIDTH = 26;
-	private static final int CLOSE_BUTTON_HEIGHT = 23;
+	protected static final int CLOSE_BUTTON_SPRITE_ID = 537;
+	protected static final int CLOSE_BUTTON_WIDTH = 26;
+	protected static final int CLOSE_BUTTON_HEIGHT = 23;
 
 	/* Widgets built on the top-level interface, removed when the dialog closes */
 	private final List<Widget> screenWidgets = new ArrayList<>();
@@ -108,6 +110,15 @@ public abstract class BaseChatDialogMap extends BaseMap
 	{
 		if (e.getGroupId() == DIALOG_OPTION_GROUP_ID)
 			this.destroyInterface();
+
+		this.onInterfaceClosed(e.getGroupId());
+	}
+
+	/**
+	 * Hook for maps that also build over another interface
+	 */
+	protected void onInterfaceClosed(int groupId)
+	{
 	}
 
 	private void tryBuildInterface()
@@ -281,6 +292,18 @@ public abstract class BaseChatDialogMap extends BaseMap
 		closeButton.setSprites(CLOSE_BUTTON_SPRITE_ID, CLOSE_BUTTON_SPRITE_ID);
 		closeButton.addAction("Close", onClose);
 		closeWidget.revalidate();
+	}
+
+	/**
+	 * Dismisses the dialog the way the player would when it offers no
+	 * decline option: with the escape key
+	 */
+	protected void pressEscape()
+	{
+		Canvas canvas = this.client.getCanvas();
+		long now = System.currentTimeMillis();
+		canvas.dispatchEvent(new KeyEvent(canvas, KeyEvent.KEY_PRESSED, now, 0, KeyEvent.VK_ESCAPE, KeyEvent.CHAR_UNDEFINED));
+		canvas.dispatchEvent(new KeyEvent(canvas, KeyEvent.KEY_RELEASED, now, 0, KeyEvent.VK_ESCAPE, KeyEvent.CHAR_UNDEFINED));
 	}
 
 	/**

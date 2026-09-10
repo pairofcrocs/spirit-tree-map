@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Digsite",
+    "option": "Digsite",
+    "x": 55,
+    "y": 266,
+    "hotkey": {
+      "x": 83,
+      "y": 280
+    }
+  },
+  {
+    "name": "Fossil Island",
+    "option": "Fossil Island",
+    "x": 298,
+    "y": 10,
+    "hotkey": {
+      "x": 326,
+      "y": 24
+    }
+  },
+  {
+    "name": "Lithkren",
+    "option": "Lithkren",
+    "x": 385,
+    "y": 248,
+    "hotkey": {
+      "x": 413,
+      "y": 262
+    }
+  }
+]

@@ -222,5 +222,15 @@
     "fileName": "/KharedstMemoirsMap/Rose.png",
     "hoverSpriteId": -19902,
     "disabledSpriteId": -19903
+  },
+  {
+    "spriteId": -20000,
+    "fileName": "/DigsitePendantMap/DigsiteMap.png"
+  },
+  {
+    "spriteId": -20001,
+    "fileName": "/DigsitePendantMap/Pendant.png",
+    "hoverSpriteId": -20002,
+    "disabledSpriteId": -20003
   }
 ]

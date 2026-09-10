@@ -4,8 +4,6 @@ import com.mjhylkema.TeleportMaps.TeleportMapsConfig;
 import com.mjhylkema.TeleportMaps.TeleportMapsPlugin;
 import com.mjhylkema.TeleportMaps.definition.KharedstMemoryDefinition;
 import com.mjhylkema.TeleportMaps.ui.UITeleport;
-import java.awt.Canvas;
-import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.inject.Inject;
 import net.runelite.api.ChatMessageType;
@@ -163,18 +161,6 @@ public class KharedstMemoirsMap extends BaseChatDialogMap
 
 			this.addTeleport(memoryTeleport);
 		}
-	}
-
-	/**
-	 * The reminisce dialog has no decline option, so the close button
-	 * dismisses it the way the player would: with the escape key
-	 */
-	private void pressEscape()
-	{
-		Canvas canvas = this.client.getCanvas();
-		long now = System.currentTimeMillis();
-		canvas.dispatchEvent(new KeyEvent(canvas, KeyEvent.KEY_PRESSED, now, 0, KeyEvent.VK_ESCAPE, KeyEvent.CHAR_UNDEFINED));
-		canvas.dispatchEvent(new KeyEvent(canvas, KeyEvent.KEY_RELEASED, now, 0, KeyEvent.VK_ESCAPE, KeyEvent.CHAR_UNDEFINED));
 	}
 
 	private void triggerLockedMessage(KharedstMemoryDefinition definition)
