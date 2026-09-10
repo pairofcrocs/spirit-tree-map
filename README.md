@@ -30,3 +30,7 @@ Provides interactive maps to replace traditional text based teleport interfaces.
 ###### Thanks [pairofcros](https://github.com/pairofcrocs)!
 Reminisce with the memoirs to pick a Great Kourend city from the map.
 
+### Digsite Pendant
+###### Thanks [pairofcros](https://github.com/pairofcrocs)!
+Rub a digsite pendant, or the mounted one in your house, to pick the Digsite, Fossil Island or Lithkren from the map.
+

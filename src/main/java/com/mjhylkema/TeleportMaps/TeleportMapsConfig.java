@@ -21,6 +21,7 @@ public interface TeleportMapsConfig extends Config
 	String KEY_SHOW_SKILLS_NECKLACE_MAP = "showSkillsNecklaceMap";
 	String KEY_SHOW_MAGIC_CARPET_MAP = "showMagicCarpetMap";
 	String KEY_SHOW_KHAREDST_MEMOIRS_MAP = "showKharedstMemoirsMap";
+	String KEY_SHOW_DIGSITE_PENDANT_MAP = "showDigsitePendantMap";
 
 	@ConfigSection(
 		name = "Teleport Maps",
@@ -134,6 +135,17 @@ public interface TeleportMapsConfig extends Config
 		section = teleportMaps
 	)
 	default boolean showKharedstMemoirsMap()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = KEY_SHOW_DIGSITE_PENDANT_MAP,
+		name = "Digsite Pendant Map",
+		description = "Replace the digsite pendant / mounted digsite pendant teleport menu with an interactive map",
+		section = teleportMaps
+	)
+	default boolean showDigsitePendantMap()
 	{
 		return true;
 	}
