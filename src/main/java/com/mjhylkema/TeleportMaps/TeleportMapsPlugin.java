@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.inject.Provides;
 import com.mjhylkema.TeleportMaps.components.adventureLog.AdventureLogComposite;
 import com.mjhylkema.TeleportMaps.components.IMap;
+import com.mjhylkema.TeleportMaps.components.adventureLog.ConstructionCapeMap;
 import com.mjhylkema.TeleportMaps.components.chatDialog.DigsitePendantMap;
 import com.mjhylkema.TeleportMaps.components.chatDialog.KharedstMemoirsMap;
 import com.mjhylkema.TeleportMaps.components.chatDialog.MagicCarpetMap;
@@ -75,6 +76,8 @@ public class TeleportMapsPlugin extends Plugin
 	@Inject
 	private DigsitePendantMap digsitePendantMap;
 	@Inject
+	private ConstructionCapeMap constructionCapeMap;
+	@Inject
 	AdventureLogComposite adventureLogComposite;
 
 	private List<IMap> mapComponents;
@@ -86,12 +89,14 @@ public class TeleportMapsPlugin extends Plugin
 		this.spriteManager.addSpriteOverrides(spriteDefinitions);
 		this.clientThread.invokeLater(() -> SpriteVariants.register(this.client, spriteDefinitions));
 
-		this.mapComponents = Arrays.asList(mushtreeMap, adventureLogComposite, spiritTreeMap, xericsMap, minecartMap, obeliskMap, skillsNecklaceMap, magicCarpetMap, kharedstMemoirsMap, digsitePendantMap);
+		this.mapComponents = Arrays.asList(mushtreeMap, adventureLogComposite, spiritTreeMap, xericsMap, minecartMap, obeliskMap, skillsNecklaceMap, magicCarpetMap, kharedstMemoirsMap, digsitePendantMap, constructionCapeMap);
 
 		this.adventureLogComposite.addAdventureLogMap(spiritTreeMap);
 		this.adventureLogComposite.addAdventureLogMap(xericsMap);
 		this.adventureLogComposite.addAdventureLogMap(minecartMap);
 		this.adventureLogComposite.addAdventureLogMap(obeliskMap);
+		// Matched by its entries, so it goes ahead of the maps that match the shared teleport title
+		this.adventureLogComposite.addAdventureLogMap(constructionCapeMap);
 		this.adventureLogComposite.addAdventureLogMap(skillsNecklaceMap);
 		this.adventureLogComposite.addAdventureLogMap(digsitePendantMap);
 

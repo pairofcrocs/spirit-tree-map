@@ -34,3 +34,6 @@ Reminisce with the memoirs to pick a Great Kourend city from the map.
 ###### Thanks [pairofcrocs](https://github.com/pairofcrocs)!
 Rub a digsite pendant, or the mounted one in your house, to pick the Digsite, Fossil Island or Lithkren from the map.
 
+### Construction Cape
+###### Thanks [pairofcrocs](https://github.com/pairofcrocs)!
+Teleport with the Construction cape to pick your house or any house portal location from the map.

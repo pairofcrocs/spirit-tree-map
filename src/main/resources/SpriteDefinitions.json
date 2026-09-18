@@ -232,5 +232,11 @@
     "fileName": "/DigsitePendantMap/Pendant.png",
     "hoverSpriteId": -20002,
     "disabledSpriteId": -20003
+  },
+  {
+    "spriteId": -20101,
+    "fileName": "/ConstructionCapeMap/Portal.png",
+    "hoverSpriteId": -20102,
+    "disabledSpriteId": -20103
   }
 ]

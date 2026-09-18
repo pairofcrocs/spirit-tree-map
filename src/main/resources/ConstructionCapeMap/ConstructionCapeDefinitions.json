@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Home",
+    "x": 97,
+    "y": 243,
+    "width": 49,
+    "height": 67,
+    "spriteEnabled": -19001,
+    "spriteHover": -19003,
+    "spriteDisabled": -19005,
+    "hotkey": {
+      "x": 130,
+      "y": 282
+    }
+  },
+  {
+    "name": "Rimmington",
+    "x": 308,
+    "y": 143,
+    "width": 30,
+    "height": 28,
+    "spriteEnabled": -20101,
+    "spriteHover": -20102,
+    "spriteDisabled": -20103,
+    "hotkey": {
+      "x": 330,
+      "y": 155
+    }
+  },
+  {
+    "name": "Taverley",
+    "x": 296,
+    "y": 103,
+    "width": 30,
+    "height": 28,
+    "spriteEnabled": -20101,
+    "spriteHover": -20102,
+    "spriteDisabled": -20103,
+    "hotkey": {
+      "x": 318,
+      "y": 115
+    }
+  },
+  {
+    "name": "Pollnivneach",
+    "x": 360,
+    "y": 187,
+    "width": 30,
+    "height": 28,
+    "spriteEnabled": -20101,
+    "spriteHover": -20102,
+    "spriteDisabled": -20103,
+    "hotkey": {
+      "x": 382,
+      "y": 199
+    }
+  },
+  {
+    "name": "Hosidius",
+    "x": 152,
+    "y": 105,
+    "width": 30,
+    "height": 28,
+    "spriteEnabled": -20101,
+    "spriteHover": -20102,
+    "spriteDisabled": -20103,
+    "hotkey": {
+      "x": 174,
+      "y": 117
+    }
+  },
+  {
+    "name": "Aldarin",
+    "x": 105,
+    "y": 187,
+    "width": 30,
+    "height": 28,
+    "spriteEnabled": -20101,
+    "spriteHover": -20102,
+    "spriteDisabled": -20103,
+    "hotkey": {
+      "x": 127,
+      "y": 199
+    }
+  },
+  {
+    "name": "Rellekka",
+    "x": 260,
+    "y": 83,
+    "width": 30,
+    "height": 28,
+    "spriteEnabled": -20101,
+    "spriteHover": -20102,
+    "spriteDisabled": -20103,
+    "hotkey": {
+      "x": 282,
+      "y": 95
+    }
+  },
+  {
+    "name": "Brimhaven",
+    "x": 281,
+    "y": 158,
+    "width": 30,
+    "height": 28,
+    "spriteEnabled": -20101,
+    "spriteHover": -20102,
+    "spriteDisabled": -20103,
+    "hotkey": {
+      "x": 303,
+      "y": 170
+    }
+  },
+  {
+    "name": "Yanille",
+    "x": 249,
+    "y": 176,
+    "width": 30,
+    "height": 28,
+    "spriteEnabled": -20101,
+    "spriteHover": -20102,
+    "spriteDisabled": -20103,
+    "hotkey": {
+      "x": 271,
+      "y": 188
+    }
+  },
+  {
+    "name": "Prifddinas",
+    "x": 205,
+    "y": 128,
+    "width": 30,
+    "height": 28,
+    "spriteEnabled": -20101,
+    "spriteHover": -20102,
+    "spriteDisabled": -20103,
+    "hotkey": {
+      "x": 227,
+      "y": 140
+    }
+  }
+]

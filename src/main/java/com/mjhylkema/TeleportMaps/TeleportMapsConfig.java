@@ -22,6 +22,7 @@ public interface TeleportMapsConfig extends Config
 	String KEY_SHOW_MAGIC_CARPET_MAP = "showMagicCarpetMap";
 	String KEY_SHOW_KHAREDST_MEMOIRS_MAP = "showKharedstMemoirsMap";
 	String KEY_SHOW_DIGSITE_PENDANT_MAP = "showDigsitePendantMap";
+	String KEY_SHOW_CONSTRUCTION_CAPE_MAP = "showConstructionCapeMap";
 
 	@ConfigSection(
 		name = "Teleport Maps",
@@ -146,6 +147,17 @@ public interface TeleportMapsConfig extends Config
 		section = teleportMaps
 	)
 	default boolean showDigsitePendantMap()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = KEY_SHOW_CONSTRUCTION_CAPE_MAP,
+		name = "Construction Cape Map",
+		description = "Replace the Construction cape teleport menu with an interactive map",
+		section = teleportMaps
+	)
+	default boolean showConstructionCapeMap()
 	{
 		return true;
 	}

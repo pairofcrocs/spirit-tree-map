@@ -3,7 +3,10 @@ package com.mjhylkema.TeleportMaps.components.adventureLog;
 import com.mjhylkema.TeleportMaps.components.IMap;
 import com.mjhylkema.TeleportMaps.ui.UIButton;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
@@ -19,9 +22,19 @@ import net.runelite.client.eventbus.Subscribe;
 public class AdventureLogComposite implements IMap
 {
 	/* Setup scripts of the classic scroll menu (interface 187) and its
-	   "Modern menu interfaces" replacement (interface 947) */
+	   "Modern menu interfaces" replacement (interface 947). The classic
+	   menu script receives the title and entries and calls the setup
+	   script, which only receives the title. */
+	final private int MENU_SCRIPT_ID = 217;
 	final private int MENU_SETUP_SCRIPT_ID = 219;
 	final private int NEW_MENU_SETUP_SCRIPT_ID = 9142;
+
+	/* The menu scripts take the title and the "|"-separated entries as
+	   their first two string arguments */
+	private static final int TITLE_ARGUMENT = 0;
+	private static final int ENTRIES_ARGUMENT = 1;
+	private static final String ENTRY_SEPARATOR = "\\|";
+	private static final String TAG_PATTERN = "<[^>]*>";
 
 	// The modern menu's group id, absent from the deprecated InterfaceID class
 	private static final int MENU_NEW = net.runelite.api.gameval.InterfaceID.MENU_NEW;
@@ -66,6 +79,9 @@ public class AdventureLogComposite implements IMap
 	final private Client client;
 	final private ClientThread clientThread;
 
+	/* Entries of the classic menu being opened, held for its setup script */
+	private List<String> pendingEntries;
+
 	@Inject
 	public AdventureLogComposite(Client client, ClientThread clientThread)
 	{
@@ -84,16 +100,24 @@ public class AdventureLogComposite implements IMap
 	{
 		switch (ev.getScriptId())
 		{
+			case MENU_SCRIPT_ID:
+			{
+				this.pendingEntries = this.parseEntries(this.getStringArgument(ev, ENTRIES_ARGUMENT));
+				return;
+			}
 			case MENU_SETUP_SCRIPT_ID:
 			{
 				String title = (String) client.getObjectStack()[client.getObjectStackSize() - 1];
+				List<String> entries = this.pendingEntries;
+				this.pendingEntries = null;
+				log.debug("Menu '{}' entries {}", title, entries);
 
 				for (IAdventureMap map: this.adventureLogMaps)
 				{
 					if (!map.isActive())
 						continue;
 
-					boolean response = map.matchesTitle(title);
+					boolean response = map.matchesMenu(title, entries);
 
 					if (response)
 					{
@@ -124,16 +148,19 @@ public class AdventureLogComposite implements IMap
 			}
 			case NEW_MENU_SETUP_SCRIPT_ID:
 			{
-				String title = this.getNewMenuTitle(ev);
+				String title = this.getStringArgument(ev, TITLE_ARGUMENT);
 				if (title == null)
 					return;
+
+				List<String> entries = this.parseEntries(this.getStringArgument(ev, ENTRIES_ARGUMENT));
+				log.debug("Menu '{}' entries {}", title, entries);
 
 				for (IAdventureMap map: this.adventureLogMaps)
 				{
 					if (!map.isActive())
 						continue;
 
-					if (map.matchesTitle(title))
+					if (map.matchesMenu(title, entries))
 					{
 						// Hide the menu upfront so it can't flash on screen
 						setNewMenuWidgetsHidden(new int[] {
@@ -185,17 +212,40 @@ public class AdventureLogComposite implements IMap
 	}
 
 	/**
-	 * The modern menu's setup script receives its title as its first argument
-	 * (following the script id) rather than on the string stack.
+	 * Returns the script's nth string argument, counting only the strings
+	 * among its arguments (which follow the script id)
 	 */
-	private String getNewMenuTitle(ScriptPreFired ev)
+	private String getStringArgument(ScriptPreFired ev, int n)
 	{
 		Object[] arguments = ev.getScriptEvent() == null ? null : ev.getScriptEvent().getArguments();
-
-		if (arguments == null || arguments.length <= 1 || !(arguments[1] instanceof String))
+		if (arguments == null)
 			return null;
 
-		return (String) arguments[1];
+		int found = 0;
+		for (int i = 1; i < arguments.length; i++)
+		{
+			if (!(arguments[i] instanceof String))
+				continue;
+
+			if (found++ == n)
+				return (String) arguments[i];
+		}
+
+		return null;
+	}
+
+	/**
+	 * Splits a menu's entries argument into entry names, stripping the
+	 * colour tags that mark locked entries
+	 */
+	private List<String> parseEntries(String entries)
+	{
+		if (entries == null)
+			return null;
+
+		return Collections.unmodifiableList(Arrays.stream(entries.split(ENTRY_SEPARATOR))
+			.map(entry -> entry.replaceAll(TAG_PATTERN, "").trim())
+			.collect(Collectors.toList()));
 	}
 
 	/**
