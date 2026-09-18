@@ -9,7 +9,6 @@ import com.mjhylkema.TeleportMaps.ui.UIButton;
 import com.mjhylkema.TeleportMaps.ui.UIHotkey;
 import com.mjhylkema.TeleportMaps.ui.UITeleport;
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +28,6 @@ import net.runelite.api.widgets.WidgetType;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
-import net.runelite.client.util.ImageUtil;
 
 @Slf4j
 public class MagicCarpetMap extends BaseMap
@@ -50,15 +48,6 @@ public class MagicCarpetMap extends BaseMap
 	private static final int CLOSE_BUTTON_HEIGHT = 23;
 	private static final int CLOSE_BUTTON_X = 427;
 	private static final int CLOSE_BUTTON_Y = 24;
-
-	/* The carpet's hover, selected and disabled sprites are generated
-	   from the single base image at startup */
-	private static final String IMG_CARPET = "/MagicCarpetMap/Carpet.png";
-	private static final Color HOVER_STROKE_INNER = new Color(188, 144, 0);
-	private static final Color HOVER_STROKE_OUTER = new Color(255, 191, 0);
-	private static final Color SELECTED_STROKE_INNER = new Color(86, 150, 44);
-	private static final Color SELECTED_STROKE_OUTER = new Color(106, 238, 18);
-	private static final float DISABLED_BRIGHTNESS = 0.70f;
 
 	private static final int DIALOG_OPTION_GROUP_ID = 219;
 	private static final int DIALOG_OPTION_CONTAINER_CHILD = 1;
@@ -107,90 +96,6 @@ public class MagicCarpetMap extends BaseMap
 	private void loadDefinitions()
 	{
 		this.carpetDefinitions = this.plugin.loadDefinitionResource(MagicCarpetDefinition[].class, DEF_FILE_CARPETS);
-	}
-
-	/**
-	 * Registers the carpet sprites, deriving the hover, selected and
-	 * disabled variants from the single base image so only one carpet
-	 * asset needs to be shipped
-	 */
-	public void registerSprites()
-	{
-		BufferedImage base = ImageUtil.loadImageResource(TeleportMapsPlugin.class, IMG_CARPET);
-
-		this.registerSprite(CARPET_SPRITE_ID, base);
-		this.registerSprite(CARPET_HIGHLIGHTED_SPRITE_ID, outline(vibrant(base), HOVER_STROKE_INNER, HOVER_STROKE_OUTER));
-		this.registerSprite(CARPET_SELECTED_SPRITE_ID, outline(base, SELECTED_STROKE_INNER, SELECTED_STROKE_OUTER));
-		this.registerSprite(CARPET_DISABLED_SPRITE_ID, grayscale(base));
-	}
-
-	private void registerSprite(int spriteId, BufferedImage image)
-	{
-		this.client.getSpriteOverrides().put(spriteId, ImageUtil.getImageSpritePixels(image, this.client));
-	}
-
-	/**
-	 * Adds a two pixel stroke around the image's shape: a bright inner
-	 * ring with a darker outer ring
-	 */
-	private static BufferedImage outline(BufferedImage image, Color inner, Color outer)
-	{
-		return ImageUtil.outlineImage(ImageUtil.outlineImage(image, inner,true), outer, true);
-	}
-
-	private static BufferedImage grayscale(BufferedImage image)
-	{
-		BufferedImage out = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		for (int y = 0; y < image.getHeight(); y++)
-		{
-			for (int x = 0; x < image.getWidth(); x++)
-			{
-				int argb = image.getRGB(x, y);
-				int a = (argb >>> 24);
-				int r = (argb >> 16) & 0xFF;
-				int g = (argb >> 8) & 0xFF;
-				int b = argb & 0xFF;
-				int grey = (int) ((0.299 * r + 0.587 * g + 0.114 * b) * DISABLED_BRIGHTNESS);
-				out.setRGB(x, y, (a << 24) | (grey << 16) | (grey << 8) | grey);
-			}
-		}
-		return out;
-	}
-
-	private static BufferedImage vibrant(BufferedImage image)
-	{
-		BufferedImage out = new BufferedImage(
-				image.getWidth(),
-				image.getHeight(),
-				BufferedImage.TYPE_INT_ARGB
-		);
-
-		for (int y = 0; y < image.getHeight(); y++)
-		{
-			for (int x = 0; x < image.getWidth(); x++)
-			{
-				int argb = image.getRGB(x, y);
-
-				int a = (argb >>> 24);
-				int r = (argb >> 16) & 0xFF;
-				int g = (argb >> 8) & 0xFF;
-				int b = argb & 0xFF;
-
-				float[] hsb = java.awt.Color.RGBtoHSB(r, g, b, null);
-
-				// Increase saturation
-				hsb[1] = Math.min(1.0f, hsb[1] * 1.5f);
-
-				// Optionally increase brightness
-				hsb[2] = Math.min(1.0f, hsb[2] * 1.1f);
-
-				int rgb = java.awt.Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
-
-				out.setRGB(x, y, (a << 24) | (rgb & 0x00FFFFFF));
-			}
-		}
-
-		return out;
 	}
 
 	@Subscribe

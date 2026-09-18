@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
-import net.runelite.api.widgets.InterfaceID;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetType;
 import net.runelite.client.callback.ClientThread;
@@ -31,14 +30,14 @@ public class XericsMap extends BaseMap implements IAdventureMap
 
 	/* Sprite IDs, dimensions and positions */
 	private static final int MAP_SPRITE_ID = -19400;
-	private static final int MAP_SPRITE_WIDTH = 330;
-	private static final int MAP_SPRITE_HEIGHT = 285;
+	private static final int MAP_SPRITE_WIDTH = 509;
+	private static final int MAP_SPRITE_HEIGHT = 317;
 	private static final int XERICS_SPRITE_ID = -19401;
 	private static final int XERICS_HIGHLIGHTED_SPRITE_ID = -19402;
 	private static final int XERICS_DISABLED_SPRITE_ID = -19403;
 
 	private static final int SCRIPT_TRIGGER_KEY = 1437;
-	private static final String XERICS_LABEL_NAME_PATTERN = "<col=735a28>(.+)</col>: (<col=5f5f5f>)?(.+)";
+	private static final String XERICS_LABEL_NAME_PATTERN = AdventureLogComposite.ENTRY_LABEL_PATTERN;
 	private static final String TRAVEL_ACTION = "Travel";
 	private static final String EXAMINE_ACTION = "Examine";
 	private static final int ADVENTURE_LOG_CONTAINER_BACKGROUND = 0;
@@ -79,10 +78,10 @@ public class XericsMap extends BaseMap implements IAdventureMap
 		}
 	}
 
-	public void buildInterface(Widget adventureLogContainer)
+	public void buildInterface(Widget adventureLogContainer, Widget entryList)
 	{
 		this.hideAdventureLogContainerChildren(adventureLogContainer);
-		this.buildAvailableTeleportList();
+		this.buildAvailableTeleportList(entryList);
 
 		this.createMapWidget(adventureLogContainer);
 		this.createTeleportWidgets(adventureLogContainer);
@@ -110,6 +109,10 @@ public class XericsMap extends BaseMap implements IAdventureMap
 
 	private void hideAdventureLogContainerChildren(Widget adventureLogContainer)
 	{
+		Widget existingBackground = adventureLogContainer.getChild(ADVENTURE_LOG_CONTAINER_BACKGROUND);
+		if (existingBackground != null)
+			existingBackground.setHidden(true);
+
 		Widget title = adventureLogContainer.getChild(ADVENTURE_LOG_CONTAINER_TITLE);
 		if (title != null)
 			title.setHidden(true);
@@ -118,16 +121,13 @@ public class XericsMap extends BaseMap implements IAdventureMap
 	/**
 	 * Constructs the list of Xeric's teleports available for the player to use
 	 */
-	private void buildAvailableTeleportList()
+	private void buildAvailableTeleportList(Widget teleportList)
 	{
 		this.availableLocations = new HashMap<>();
 
 		// Compile the pattern that will match the teleport label
 		// and place the hotkey and teleport name into groups
 		Pattern labelPattern = Pattern.compile(XERICS_LABEL_NAME_PATTERN);
-
-		// Get the parent widgets containing the teleport locations list
-		Widget teleportList = this.plugin.getClient().getWidget(InterfaceID.ADVENTURE_LOG, 3);
 
 		// Fetch all teleport label widgets
 		Widget[] labelWidgets = teleportList.getDynamicChildren();
@@ -168,8 +168,8 @@ public class XericsMap extends BaseMap implements IAdventureMap
 		this.createSpriteWidget(container,
 			MAP_SPRITE_WIDTH,
 			MAP_SPRITE_HEIGHT,
-			66,
-			43,
+			2,
+			13,
 			MAP_SPRITE_ID);
 	}
 
@@ -235,7 +235,7 @@ public class XericsMap extends BaseMap implements IAdventureMap
 
 	private void triggerTeleport(AdventureLogEntry<XericsDefinition> adventureLogEntry)
 	{
-		this.clientThread.invokeLater(() -> this.client.runScript(SCRIPT_TRIGGER_KEY, this.plugin.getClient().getWidget(0xBB0003).getId(), adventureLogEntry.getWidget().getIndex()));
+		this.clientThread.invokeLater(() -> this.client.runScript(SCRIPT_TRIGGER_KEY, adventureLogEntry.getWidget().getId(), adventureLogEntry.getWidget().getIndex()));
 	}
 
 	private void triggerLockedMessage(XericsDefinition xericsDefinition)

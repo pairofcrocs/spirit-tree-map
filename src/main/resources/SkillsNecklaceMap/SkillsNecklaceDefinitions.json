@@ -8,7 +8,7 @@
     "height": 31,
     "spriteEnabled": -19730,
     "spriteHover": -19731,
-    "spriteDisabled": -19730,
+    "spriteDisabled": -19732,
     "hotkey": {
       "x": 356,
       "y": 159
@@ -23,7 +23,7 @@
     "height": 31,
     "spriteEnabled": -19740,
     "spriteHover": -19741,
-    "spriteDisabled": -19740,
+    "spriteDisabled": -19742,
     "hotkey": {
       "x": 444,
       "y": 163
@@ -38,7 +38,7 @@
     "height": 31,
     "spriteEnabled": -19750,
     "spriteHover": -19751,
-    "spriteDisabled": -19750,
+    "spriteDisabled": -19752,
     "hotkey": {
       "x": 412,
       "y": 196
@@ -53,7 +53,7 @@
     "height": 29,
     "spriteEnabled": -19760,
     "spriteHover": -19761,
-    "spriteDisabled": -19760,
+    "spriteDisabled": -19762,
     "hotkey": {
       "x": 467,
       "y": 133
